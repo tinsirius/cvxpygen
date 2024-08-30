@@ -50,7 +50,7 @@ set (cpg_src "${cpg_src}" PARENT_SCOPE)
 include_directories (${cpg_include})
 
 # example executable target
-add_executable (cpg_example ${cpg_head} ${cpg_src} ${CMAKE_CURRENT_SOURCE_DIR}/src/cpg_example.c Threads::Threads)
+add_executable (cpg_example ${cpg_head} ${cpg_src} ${CMAKE_CURRENT_SOURCE_DIR}/src/cpg_example.c)
 
 # static library target for python extension module
 add_library (cpg STATIC ${cpg_head} ${cpg_src})
