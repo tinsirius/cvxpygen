@@ -6,6 +6,8 @@ cmake_minimum_required (VERSION 3.5)
 
 project (cvxpygen)
 
+find_package(Threads REQUIRED)
+
 # compiler configuration
 if (NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3")
@@ -48,7 +50,7 @@ set (cpg_src "${cpg_src}" PARENT_SCOPE)
 include_directories (${cpg_include})
 
 # example executable target
-add_executable (cpg_example ${cpg_head} ${cpg_src} ${CMAKE_CURRENT_SOURCE_DIR}/src/cpg_example.c)
+add_executable (cpg_example ${cpg_head} ${cpg_src} ${CMAKE_CURRENT_SOURCE_DIR}/src/cpg_example.c Threads::Threads)
 
 # static library target for python extension module
 add_library (cpg STATIC ${cpg_head} ${cpg_src})

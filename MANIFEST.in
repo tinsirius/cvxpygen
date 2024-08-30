@@ -39,6 +39,7 @@ include cvxpygen/solvers/Clarabel.cpp/Clarabel.rs/src/algebra/csc/*.rs
 include cvxpygen/solvers/Clarabel.cpp/Clarabel.rs/src/algebra/dense/*.rs
 include cvxpygen/solvers/Clarabel.cpp/Clarabel.rs/src/algebra/densesym3x3/*.rs
 include cvxpygen/solvers/Clarabel.cpp/Clarabel.rs/src/qdldl/*.rs
+include cvxpygen/solvers/Clarabel.cpp/Clarabel.rs/src/stdio/*.rs
 include cvxpygen/solvers/Clarabel.cpp/Clarabel.rs/src/solver/*.rs
 include cvxpygen/solvers/Clarabel.cpp/Clarabel.rs/src/solver/core/*.rs
 include cvxpygen/solvers/Clarabel.cpp/Clarabel.rs/src/solver/core/cones/*.rs
