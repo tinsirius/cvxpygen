@@ -1006,7 +1006,7 @@ class ClarabelInterface(SolverInterface):
                 link_libraries = 'libclarabel_c_static ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES}'
             else:
                 link_libraries = 'libclarabel_c_static'
-            f.write(f'\ntarget_link_libraries(cpg_example PRIVATE {link_libraries})')
+            f.write(f'\ntarget_link_libraries(cpg_example PRIVATE {link_libraries} Threads::Threads)')
             f.write(f'\ntarget_link_libraries(cpg PRIVATE {link_libraries})\n')
 
         # remove examples target from Clarabel.cpp/CMakeLists.txt and set build type to Release
