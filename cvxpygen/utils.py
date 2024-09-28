@@ -766,6 +766,20 @@ def write_solve_def(f, configuration, variable_info, dual_variable_info, paramet
     f.write('#include "cpg_solve.h"\n')
     f.write('#include "cpg_workspace.h"\n\n')
 
+    data_dict = {}
+    for base_col, name in parameter_info.col_to_name_usp.items():
+        if '_' in name:
+            prefix, index = name.rsplit('_', 1)
+            if index.isdigit():
+                index = int(index)
+                if prefix not in data_dict:
+                    data_dict[prefix] = {}
+                data_dict[prefix][index] = base_col
+    name_group = {k: [v[i] for i in sorted(v.keys())] for k, v in data_dict.items()}
+    for name, idx_group in name_group.items():
+        idx_group_str = ', '.join(map(str, idx_group))
+        f.write(f"const int {name}_group[] = {{{idx_group_str}}};\n")
+
     if not configuration.unroll:
         f.write('static cpg_int i;\n')
         f.write('static cpg_int j;\n')
@@ -925,19 +939,16 @@ def write_solve_prot(f, configuration, variable_info, dual_variable_info, parame
 
     write_description(f, 'c', 'Function declarations')
     f.write('#include "cpg_workspace.h"\n')
-    data_dict = {}
-    for base_col, name in parameter_info.col_to_name_usp.items():
+    
+    group_names = []
+    for _, name in parameter_info.col_to_name_usp.items():
         if '_' in name:
             prefix, index = name.rsplit('_', 1)
-            if index.isdigit():
-                index = int(index)
-                if prefix not in data_dict:
-                    data_dict[prefix] = {}
-                data_dict[prefix][index] = base_col
-    name_group = {k: [v[i] for i in sorted(v.keys())] for k, v in data_dict.items()}
-    for name, idx_group in name_group.items():
-        idx_group_str = ', '.join(map(str, idx_group))
-        f.write(f"const int {name}_group[] = {{{idx_group_str}}};\n")
+            if index.isdigit() and prefix not in group_names:
+                group_names.append(prefix)
+    for name in group_names:
+        f.write(f"extern const int {name}_group[];\n")
+
     f.write("\n")
     f.write('\n// Update user-defined parameter values\n')
     for name, size in parameter_info.name_to_size_usp.items():
